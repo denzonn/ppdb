@@ -28,11 +28,10 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('student-register', [StudentRegisterController::class, 'index'])->name('student-register-index');
     Route::get('student-register/pdf/{no_register}', [StudentRegisterController::class, 'view_pdf'])->name('student-register-pdf');
     Route::get('student-register/{no_register}', [StudentRegisterController::class, 'detail'])->name('student-register-detail');
+    Route::post('/send-notification/{no_register}', [StudentRegisterController::class, 'sendNotification'])->name('sendNotification');
 
     Route::get('get-information', [InformationController::class, 'getData'])->name('informationData');
     Route::get('get-student-register', [StudentRegisterController::class, 'getData'])->name('registerData');
-
-    Route::get('send-graduation-message/{no_register}', [StudentRegisterController::class, 'sendGraduationMessage'])->name('sendGraduationMessage');
 });
 
 require __DIR__.'/auth.php';

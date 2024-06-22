@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\StudentRegister;
+use App\Models\User;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Mpdf\Mpdf;
+use Google\Client as GoogleClient;
 use Yajra\DataTables\DataTables;
 
 class StudentRegisterController extends Controller
@@ -41,16 +44,59 @@ class StudentRegisterController extends Controller
         $mpdf->Output('Data Registrasi.pdf', \Mpdf\Output\Destination::DOWNLOAD);
     }
 
-    public function sendGraduationMessage($no_register){
-        $data = StudentRegister::where('no_register',$no_register)->first();
+    private function getAccessToken()
+    {
+        $client = new GoogleClient();
+        $client->setAuthConfig(storage_path('app/ppdb-c2234-8fc8f37c615d.json'));
+        $client->addScope('https://www.googleapis.com/auth/firebase.messaging');
 
-        $data->is_confirm = 1;
+        $token = $client->fetchAccessTokenWithAssertion();
+        return $token['access_token'];
+    }
 
-        $phone = "0895326173804";
-        $message = "Selamat Anda Lulus";
+    public function sendNotification(Request $request, $no_register)
+    {
+        $userId = $request->input('user_id');
+        $user = User::find($userId);
 
-        $whatsappUrl = "https://api.whatsapp.com/send?phone=$phone&text=" . urlencode($message);
+        if (!$user || !$user->token) {
+            return response()->json(['error' => 'User not found or token is missing'], 404);
+        }
 
-        return redirect()->away($whatsappUrl);
+        $accessToken = $this->getAccessToken();
+
+        $client = new Client();
+
+        $url = 'https://fcm.googleapis.com/v1/projects/ppdb-c2234/messages:send';
+
+        $data = [
+            'message' => [
+                'token' => $user->token,
+                'notification' => [
+                    'title' => `Selamat $user->name`,
+                    'body' => 'Anda dinyatakan Lulus. Informasi lebih lanjut silahkan datang ke SDN 2 Rantepao!'
+                ]
+            ]
+        ];
+
+        try {
+            $response = $client->post($url, [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $accessToken,
+                    'Content-Type' => 'application/json',
+                ],
+                'json' => $data
+            ]);
+
+            $responseBody = json_decode($response->getBody()->getContents(), true);
+
+            StudentRegister::findOrFail($no_register)->update([
+                'is_confirm' => 1
+            ]);
+
+            return redirect()->route('student-register')->with('toast_success', 'Konfirmasi Successfully!');
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }

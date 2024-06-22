@@ -29,8 +29,16 @@
             <div class="flex flex-row gap-4 justify-end w-full">
                 <a href="{{ route('student-register-pdf', $data->no_register) }}"
                     class="py-2 px-8 bg-red-500 rounded-md text-white "><i class="fa-solid fa-file-pdf text-lg"></i></a>
-                <a href="{{ route('sendGraduationMessage', $data->no_register) }}"
-                    class="py-2 px-8 bg-primary rounded-md text-white "><i class="fa-solid fa-circle-check text-lg"></i></a>
+                @if ($data->is_confirm == 0)
+                    <a href="{{ route('sendNotification', $data->no_register) }}"
+                        onclick="event.preventDefault(); document.getElementById('sendNotification').submit();"
+                        class="py-2 px-8 bg-primary rounded-md text-white"><i
+                            class="fa-solid fa-circle-check text-lg"></i></a>
+                    <form id="sendNotification" action="{{ route('sendNotification', $data->no_register) }}" method="POST"
+                        class="d-none">
+                        @csrf
+                    </form>
+                @endif
             </div>
         </div>
         <div class="">
