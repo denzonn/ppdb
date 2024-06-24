@@ -239,43 +239,43 @@
             <tr>
                 <td class="item-1">1.</td>
                 <td class="item-2">Nama Ayah </td>
-                <td class="item-3">{{ $data->parentData->father_name }}</td>
+                <td class="item-3">{{ $data->parentData->father_name ?? '-' }}</td>
             </tr>
         </table>
         <table class="table-container">
             <tr>
                 <td class="item-1">2.</td>
                 <td class="item-2">NIK </td>
-                <td class="item-3">{{ $data->parentData->father_nik }}</td>
+                <td class="item-3">{{ $data->parentData->father_nik ?? '-' }}</td>
             </tr>
         </table>
         <table class="table-container">
             <tr>
                 <td class="item-1">3.</td>
                 <td class="item-2">Tempat, Tanggal Lahir </td>
-                <td class="item-3">{{ $data->parentData->father_birth_place }},
-                    {{ $data->parentData->father_birth_date }}</td>
+                <td class="item-3">{{ $data->parentData->father_birth_place ?? '-' }},
+                    {{ $data->parentData->father_birth_date ?? '' }}</td>
             </tr>
         </table>
         <table class="table-container">
             <tr>
                 <td class="item-1">4.</td>
                 <td class="item-2">Pendidikan Terakhir </td>
-                <td class="item-3">{{ $data->parentData->father_education }}</td>
+                <td class="item-3">{{ $data->parentData->father_education ?? '-' }}</td>
             </tr>
         </table>
         <table class="table-container">
             <tr>
                 <td class="item-1">5.</td>
                 <td class="item-2">Pekerjaan </td>
-                <td class="item-3">{{ $data->parentData->father_job }}</td>
+                <td class="item-3">{{ $data->parentData->father_job ?? '-' }}</td>
             </tr>
         </table>
         <table class="table-container">
             <tr>
                 <td class="item-1">6.</td>
                 <td class="item-2">Penghasilan </td>
-                <td class="item-3">{{ $data->parentData->father_income }}</td>
+                <td class="item-3">{{ $data->parentData->father_income ?? '-' }}</td>
             </tr>
         </table>
         <table class="table-container">
@@ -286,21 +286,21 @@
                     <table class="nested-table">
                         <tr>
                             <td style="border-right: 1px solid black; border-bottom: 1px solid black; padding: 7px">RT
-                                : {{ $data->parentData->father_address_rt }}</td>
+                                : {{ $data->parentData->father_address_rt ?? '-' }}</td>
                             <td style="border-right: 1px solid black; border-bottom: 1px solid black; padding: 7px">RW
-                                : {{ $data->parentData->father_address_rw }}</td>
+                                : {{ $data->parentData->father_address_rw ?? '-' }}</td>
                             <td style="border-bottom: 1px solid black; padding: 7px">Dusun :
-                                {{ $data->parentData->father_address_hamlet }}</td>
+                                {{ $data->parentData->father_address_hamlet ?? '-' }}</td>
                         </tr>
                         <tr>
                             <td style="border-bottom: 1px solid black; border-right: 1px solid black; padding: 7px">
-                                Desa : {{ $data->parentData->father_address_village }}</td>
+                                Desa : {{ $data->parentData->father_address_village ?? '-' }}</td>
                             <td style="border-bottom: 1px solid black; padding: 7px" colspan="2">Kecamatan :
-                                {{ $data->parentData->father_address_subdistrict }}</td>
+                                {{ $data->parentData->father_address_subdistrict ?? '-' }}</td>
                         </tr>
                         <tr>
                             <td style=" padding: 7px" colspan="3">Kab/Kota :
-                                {{ $data->parentData->father_address_regency }}</td>
+                                {{ $data->parentData->father_address_regency ?? '-' }}</td>
                         </tr>
                     </table>
                 </td>
@@ -310,43 +310,43 @@
             <tr>
                 <td class="item-1">8.</td>
                 <td class="item-2">Nama Ibu </td>
-                <td class="item-3">{{ $data->parentData->mother_name }}</td>
+                <td class="item-3">{{ $data->parentData->mother_name ?? '-' }}</td>
             </tr>
         </table>
         <table class="table-container">
             <tr>
                 <td class="item-1">9.</td>
                 <td class="item-2">NIK </td>
-                <td class="item-3">{{ $data->parentData->mother_nik }}</td>
+                <td class="item-3">{{ $data->parentData->mother_nik ?? '-' }}</td>
             </tr>
         </table>
         <table class="table-container">
             <tr>
                 <td class="item-1">10.</td>
                 <td class="item-2">Tempat, Tanggal Lahir </td>
-                <td class="item-3">{{ $data->parentData->mother_birth_place }},
-                    {{ $data->parentData->mother_birth_date }}</td>
+                <td class="item-3">{{ $data->parentData->mother_birth_place ?? '-' }},
+                    {{ $data->parentData->mother_birth_date ?? '' }}</td>
             </tr>
         </table>
         <table class="table-container">
             <tr>
                 <td class="item-1">11.</td>
                 <td class="item-2">Pendidikan Terakhir </td>
-                <td class="item-3">{{ $data->parentData->mother_education }}</td>
+                <td class="item-3">{{ $data->parentData->mother_education ?? '-' }}</td>
             </tr>
         </table>
         <table class="table-container">
             <tr>
                 <td class="item-1">12.</td>
                 <td class="item-2">Pekerjaan </td>
-                <td class="item-3">{{ $data->parentData->mother_job }}</td>
+                <td class="item-3">{{ $data->parentData->mother_job ?? '-' }}</td>
             </tr>
         </table>
         <table class="table-container">
             <tr>
                 <td class="item-1">13.</td>
                 <td class="item-2">Penghasilan </td>
-                <td class="item-3">{{ $data->parentData->mother_income }}</td>
+                <td class="item-3">{{ $data->parentData->mother_income ?? '-' }}</td>
             </tr>
         </table>
         <table class="table-container">
@@ -357,21 +357,21 @@
                     <table class="nested-table">
                         <tr>
                             <td style="border-right: 1px solid black; border-bottom: 1px solid black; padding: 7px">RT
-                                : {{ $data->parentData->mother_address_rt }}</td>
+                                : {{ $data->parentData->mother_address_rt ?? '-' }}</td>
                             <td style="border-right: 1px solid black; border-bottom: 1px solid black; padding: 7px">RW
-                                : {{ $data->parentData->mother_address_rw }}</td>
+                                : {{ $data->parentData->mother_address_rw ?? '-' }}</td>
                             <td style="border-bottom: 1px solid black; padding: 7px">Dusun :
-                                {{ $data->parentData->mother_address_hamlet }}</td>
+                                {{ $data->parentData->mother_address_hamlet ?? '-' }}</td>
                         </tr>
                         <tr>
                             <td style="border-bottom: 1px solid black; border-right: 1px solid black; padding: 7px">
-                                Desa : {{ $data->parentData->mother_address_village }}</td>
+                                Desa : {{ $data->parentData->mother_address_village ?? '-' }}</td>
                             <td style="border-bottom: 1px solid black; padding: 7px" colspan="2">Kecamatan :
-                                {{ $data->parentData->mother_address_subdistrict }}</td>
+                                {{ $data->parentData->mother_address_subdistrict ?? '-' }}</td>
                         </tr>
                         <tr>
                             <td style=" padding: 7px" colspan="3">Kab/Kota :
-                                {{ $data->parentData->mother_address_regency }}</td>
+                                {{ $data->parentData->mother_address_regency ?? '-' }}</td>
                         </tr>
                     </table>
                 </td>

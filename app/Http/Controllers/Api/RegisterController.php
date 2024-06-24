@@ -12,6 +12,8 @@ use App\Models\StudentTermData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request as FacadesRequest;
+use Illuminate\Support\Facades\Response;
+use Mpdf\Mpdf;
 
 class RegisterController extends BaseController
 {
@@ -97,10 +99,31 @@ class RegisterController extends BaseController
         return $this->sendResponse($studentRegister, 'Successfully create a new registration');
     }
 
-    public function information(){
-        $data = RegisterInformation::get();
+    public function information()
+    {
+        $data = RegisterInformation::first();
 
         return $this->sendResponse($data, 'Successfully get registration information');
     }
 
+    public function pdf($no_register)
+    {
+        $data = StudentRegister::with(['studentData', 'parentData', 'guardianData', 'termData', 'user'])
+            ->where('no_register', $no_register)
+            ->first();
+
+        $html = view('pages.student-register.pdf', compact('data'))->render();
+
+        $mpdf = new Mpdf();
+        $mpdf->WriteHTML($html);
+
+        // Capture the output as a string
+        $pdfContent = $mpdf->Output('', 'S');
+
+        // Return the PDF file as a response
+        return Response::make($pdfContent, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="Data Registrasi.pdf"',
+        ]);
+    }
 }

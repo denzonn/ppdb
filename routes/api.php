@@ -24,4 +24,5 @@ Route::middleware(['auth:api'])->group(function() {
     Route::post('student-register', [RegisterController::class, 'store']);
 
     Route::get('information', [RegisterController::class, 'information']);
+    Route::get('pdf/{no_register}', [RegisterController::class, 'pdf']);
 });

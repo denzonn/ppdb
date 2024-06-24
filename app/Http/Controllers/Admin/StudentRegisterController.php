@@ -56,8 +56,8 @@ class StudentRegisterController extends Controller
 
     public function sendNotification(Request $request, $no_register)
     {
-        $userId = $request->input('user_id');
-        $user = User::find($userId);
+        $studentRegister = StudentRegister::where('no_register', $no_register)->first();
+        $user = User::find($studentRegister->user_id);
 
         if (!$user || !$user->token) {
             return response()->json(['error' => 'User not found or token is missing'], 404);
@@ -90,9 +90,8 @@ class StudentRegisterController extends Controller
 
             $responseBody = json_decode($response->getBody()->getContents(), true);
 
-            StudentRegister::findOrFail($no_register)->update([
-                'is_confirm' => 1
-            ]);
+            $studentRegister->is_confirm = 1;
+            $studentRegister->save();
 
             return redirect()->route('student-register')->with('toast_success', 'Konfirmasi Successfully!');
         } catch (\Exception $e) {
