@@ -61,17 +61,49 @@
                     {
                         data: 'no_register',
                         render: function(data) {
-                            let editUrl = '{{ route('student-register-detail', ':id') }}';
+                            let editUrl = '{{ route('student-register-edit', ':id') }}';
+                            let deleteUrl = '{{ route('student-register-destroy', ':id') }}';
+                            let detailUrl = '{{ route('student-register-detail', ':id') }}';
                             editUrl = editUrl.replace(':id', data);
+                            deleteUrl = deleteUrl.replace(':id', data);
+                            detailUrl = detailUrl.replace(':id', data);
                             return '<div class="flex">' +
                                 '<a href="' + editUrl +
                                 '" class="bg-yellow-500 px-3 text-sm py-1 rounded-md text-white mr-2" data-id="' +
+                                data + '">Edit</a>' +
+                                '<form action="' + deleteUrl +
+                                '" method="POST" class="d-inline delete-form">' +
+                                '@csrf' +
+                                '@method('DELETE')' +
+                                '<button class="bg-red-500 text-white px-3 text-sm py-1 rounded-md delete-button mr-2" type="button">Delete</button>' +
+                                '</form>' +
+                                '<a href="' + detailUrl +
+                                '" class="bg-primary px-3 text-sm py-1 rounded-md text-white mr-2" data-id="' +
                                 data + '">Detail</a>'
                             '</div>';
                         }
                     },
                 ]
             })
+
+            $(document).on('click', '.delete-button', function(e) {
+                e.preventDefault();
+                let form = $(this).closest('form');
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Apakah kamu ingin menghapus Data Registrasi?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
         })
     </script>
 @endpush

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('no_register')->nullable();
-            $table->boolean('is_confirm')->default(0);
+            $table->enum('is_confirm', [0,1,2])->default(0);
             $table->timestamps();
         });
     }

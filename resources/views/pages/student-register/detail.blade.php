@@ -26,9 +26,14 @@
                 </div>
                 <div class="text-xl font-semibold">Detail Registrasi</div>
             </div>
-            <div class="flex flex-row gap-4 justify-end w-full">
+            <div class="flex flex-row items-center gap-4 justify-end w-full">
+                @if ($data->is_confirm == 1)
+                    <div class="text-green-500 font-semibold">Diterima</div>
+                @elseif ($data->is_confirm == 2)
+                    <div class="text-red-500 font-semibold">Ditolak</div>
+                @endif
                 <a href="{{ route('student-register-pdf', $data->no_register) }}"
-                    class="py-2 px-8 bg-red-500 rounded-md text-white "><i class="fa-solid fa-file-pdf text-lg"></i></a>
+                    class="py-2 px-8 bg-red-500 rounded-md text-white mr-6"><i class="fa-solid fa-file-pdf text-lg"></i></a>
                 @if ($data->is_confirm == 0)
                     <a href="{{ route('sendNotification', $data->no_register) }}"
                         onclick="event.preventDefault(); document.getElementById('sendNotification').submit();"
@@ -36,6 +41,13 @@
                             class="fa-solid fa-circle-check text-lg"></i></a>
                     <form id="sendNotification" action="{{ route('sendNotification', $data->no_register) }}" method="POST"
                         class="d-none">
+                        @csrf
+                    </form>
+                    <a href="{{ route('sendNotificationFailed', $data->no_register) }}"
+                        onclick="event.preventDefault(); document.getElementById('sendNotificationFailed').submit();"
+                        class="py-2 px-8 bg-red-500 rounded-md text-white"><i class="fa-solid fa-xmark text-lg"></i></a>
+                    <form id="sendNotificationFailed" action="{{ route('sendNotificationFailed', $data->no_register) }}"
+                        method="POST" class="d-none">
                         @csrf
                     </form>
                 @endif
