@@ -463,19 +463,19 @@
                     <div>Mengetahui,</div>
                     <div>Ketua Panitia PPDB</div>
                     <div style="padding: 20px 0 5px 0;">
-                        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/qrcode.png'))) }}"
+                        <img src="{{ $committe->qrcode }}"
                             alt="Logo" class="h-7">
                     </div>
                     <div style="font-weight: bold; font-size: 18px; text-decoration: underline;">
-                        GELORA E. TOTTING, S.Th., M.Pd
+                        {{ $committe->name }}
                     </div>
                     <div style="font-size: 16px;">
-                        NIP 19680912 200502 2 007
+                        NIP {{ $committe->nip }}
                     </div>
                 </td>
                 <td style="width: 33%; text-align: center; vertical-align: top;">
                     <div style="white-space: pre; text-align: center;">
-                        Rantepao,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,2024
+                        Rantepao,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,{{ $committe->year }}
                     </div>
                     <div>Orang Tua</div>
                     <br><br><br><br>

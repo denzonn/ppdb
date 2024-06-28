@@ -34,6 +34,9 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::post('/send-notification/{no_register}', [StudentRegisterController::class, 'sendNotification'])->name('sendNotification');
     Route::post('/send-notification-failed/{no_register}', [StudentRegisterController::class, 'sendNotificationFailed'])->name('sendNotificationFailed');
 
+    Route::get('student-register/committe/{id}', [StudentRegisterController::class, 'committe'])->name('student-register-committe');
+    Route::put('student-register/committe/{id}', [StudentRegisterController::class, 'committeUpdate'])->name('student-register-committe-update');
+
     Route::get('get-information', [InformationController::class, 'getData'])->name('informationData');
     Route::get('get-student-register', [StudentRegisterController::class, 'getData'])->name('registerData');
 });

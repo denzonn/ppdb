@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Committe;
 use App\Models\Guardian;
 use App\Models\ParentData;
 use App\Models\StudentData;
@@ -13,6 +14,7 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Mpdf\Mpdf;
 use Google\Client as GoogleClient;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
@@ -21,7 +23,9 @@ class StudentRegisterController extends Controller
 
     public function index()
     {
-        return view('pages.student-register.index');
+        $committe = Committe::all();
+
+        return view('pages.student-register.index', compact('committe'));
     }
 
     public function getData()
@@ -149,8 +153,9 @@ class StudentRegisterController extends Controller
     public function view_pdf($no_register)
     {
         $data = StudentRegister::with(['studentData', 'parentData', 'guardianData', 'termData', 'user'])->where('no_register', $no_register)->first();
+        $committe = Committe::first();
 
-        $html = view('pages.student-register.pdf', compact('data'))->render();
+        $html = view('pages.student-register.pdf', compact('data', 'committe'))->render();
 
         $mpdf = new Mpdf();
         $mpdf->WriteHTML($html);
@@ -255,5 +260,38 @@ class StudentRegisterController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+
+    public function committe($id)
+    {
+        $data = Committe::findOrFail($id);
+
+        return view('pages.student-register.committe', compact('data'));
+    }
+
+    public function committeUpdate(Request $request, $id)
+    {
+        $committe = Committe::findOrFail($id);
+
+        $data = $request->except('qrcode');
+
+        if ($request->hasFile('qrcode')) {
+            if ($committe->qrcode) {
+                Storage::disk('public')->delete('qrcode/' . $committe->qrcode);
+            }
+
+            $image = $request->file('qrcode');
+            $imageData = file_get_contents($image);
+            $base64Image = 'data:image/' . $image->getClientOriginalExtension() . ';base64,' . base64_encode($imageData);
+
+            $data['qrcode'] = $base64Image;
+        }
+
+        $committe->update($data);
+
+        // Log the Base64 image data to check if it's correct
+        Log::info($data['qrcode']);
+
+        return redirect()->route('student-register-index');
     }
 }
