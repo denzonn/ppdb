@@ -23,9 +23,7 @@ class StudentRegisterController extends Controller
 
     public function index()
     {
-        $committe = Committe::all();
-
-        return view('pages.student-register.index', compact('committe'));
+        return view('pages.student-register.index');
     }
 
     public function getData()
@@ -292,6 +290,6 @@ class StudentRegisterController extends Controller
         // Log the Base64 image data to check if it's correct
         Log::info($data['qrcode']);
 
-        return redirect()->route('student-register-index');
+        return redirect()->refresh();
     }
 }

@@ -13,11 +13,7 @@
         </div>
         <div class=" font-semibold text-primary text-4xl">Peserta Pendaftaran</div>
     </div>
-    <div class="bg-white p-8 rounded-md text-gray-500">
-        @foreach ($committe as $item)
-            <a href="{{ route('student-register-committe', $item->id) }}"
-                class="py-3 px-6 rounded-md bg-primary text-white">Data Panitia</a>
-        @endforeach
+    <div class="bg-white p-8 rounded-md text-gray-500 mt-6">
         <div class="pt-4">
             <table id="informationTable" class="w-full">
                 <thead class="text-left">

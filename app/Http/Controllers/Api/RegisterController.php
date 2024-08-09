@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Committe;
 use App\Models\Guardian;
 use App\Models\ParentData;
 use App\Models\RegisterInformation;
@@ -112,7 +113,9 @@ class RegisterController extends BaseController
             ->where('no_register', $no_register)
             ->first();
 
-        $html = view('pages.student-register.pdf', compact('data'))->render();
+            $committe = Committe::first();
+
+        $html = view('pages.student-register.pdf', compact('data', 'committe'))->render();
 
         $mpdf = new Mpdf();
         $mpdf->WriteHTML($html);
